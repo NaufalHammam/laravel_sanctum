@@ -1,0 +1,6 @@
+Referensi
+https://qadrlabs.com/post/rest-api-authentication-with-laravel-sanctum
+
+https://medium.com/geekculture/laravel-sanctum-with-custom-expiry-time-1b69984363e0
+
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
