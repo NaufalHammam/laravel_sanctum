@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\NewAccessToken;
 
-
 class AuthController extends Controller
 {
 
@@ -54,7 +53,12 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json([
+                // 'data' => $user,
+                'status'    => 0,
+                'message'   => "Register failed"
+            ]);
+            // return response()->json($validator->errors());
         }
 
         $user = User::create([
@@ -64,7 +68,9 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'data' => $user
+            'status'    => 1,
+            'data'      => $user,
+            'message'   => "Register success"
         ]);
     }
 
@@ -97,6 +103,7 @@ class AuthController extends Controller
         $token = $this->manual_createToken($user->id, "Auth token");
         return response()->json([
             // 'token' => $token,
+            'user'  => $user->name,
             'token' => $token->plainTextToken,
             'token_type' => 'Bearer',
             'expired_at' => date_format(date_create($token->accessToken->expired_at), "Y-m-d H:i:s")
